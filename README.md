@@ -1,4 +1,4 @@
-#Fuvahmulah Map API
+# Fuvahmulah Map API
 
 This repository is the home to the backend api that powers Fuvahmulah Map project. It is based on Laravel 5.8.
 
