@@ -25,3 +25,5 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/markers/neighbors', 'MarkersController@neighbors');
 
 });
+
+Route::post('login', 'Api\AuthController@login');
