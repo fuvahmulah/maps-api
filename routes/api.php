@@ -27,3 +27,4 @@ Route::group(['middleware' => 'auth:api'], function () {
 });
 
 Route::post('login', 'Api\AuthController@login');
+Route::get('/locations', 'MarkersController@locations');
