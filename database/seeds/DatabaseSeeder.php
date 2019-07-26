@@ -1,6 +1,7 @@
 <?php
 
 use App\Marker;
+use App\MarkerType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -18,6 +19,12 @@ class DatabaseSeeder extends Seeder
 
 
         DB::table('markers')->truncate();
+        DB::table('marker_types')->truncate();
+
+        $markerType = MarkerType::create([
+            'name' => 'House',
+            'created_by' => 1
+        ]);
 
         $districts = ['Dhadimagu', 'Dhiguvaandu', 'Hoadhadu', 'Maadhadu', 'Miskiymagu', 'Malegan', 'Funaadu', 'Dhoodigan'];
 
@@ -40,6 +47,10 @@ class DatabaseSeeder extends Seeder
                     'name' => $feature['properties']['Name'],
                     'address' => $feature['properties']['Name'],
                     'geometry' => $point,
+                    'marker_type_id' => $markerType->id,
+                    'created_by' => 1,
+                    'verified_at' => now(),
+                    'verified_by' => 1
                 ]);
             }
         }
