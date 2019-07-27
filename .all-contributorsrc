@@ -1,0 +1,23 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "ajaaibu",
+      "name": "Ahmed Ali",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1146627?v=4",
+      "profile": "http://about.me/ajaaibu",
+      "contributions": [
+        "review"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "maps-api",
+  "projectOwner": "fuvahmulah",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
