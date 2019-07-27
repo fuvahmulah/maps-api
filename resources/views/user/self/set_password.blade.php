@@ -17,6 +17,18 @@
                         {{ csrf_field() }}
 
                         <div class="form-group row">
+                            <label for="username" class="col-md-3">Username</label>
+                            <div class="col-md-9">
+                                <input type="text" name="username" value="{{ old('username')?? $user->username }}" class="form-control @error('username') is-invalid @enderror"/>
+                                @error('username')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="password" class="col-md-3">Password</label>
                             <div class="col-md-9">
                                 <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" />
@@ -35,7 +47,7 @@
                             <input type="password" name="password_confirmation" class="form-control" />
                             </div>
                         </div>
-                        
+
                         <div class="form-group row">
                             <div class="col-md-9 offset-md-3">
                                 <input type="submit" class="btn btn-primary" value="Save" />
