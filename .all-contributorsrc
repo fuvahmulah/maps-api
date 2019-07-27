@@ -6,6 +6,15 @@
   "commit": false,
   "contributors": [
     {
+      "login": "xahy",
+      "name": "Ismail Zahee",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2995938?v=4",
+      "profile": "http://xahy.me",
+      "contributions": [
+        "code"
+      ]
+    }
+    {
       "login": "ajaaibu",
       "name": "Ahmed Ali",
       "avatar_url": "https://avatars3.githubusercontent.com/u/1146627?v=4",
