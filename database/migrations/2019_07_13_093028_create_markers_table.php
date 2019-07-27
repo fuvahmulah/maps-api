@@ -17,7 +17,6 @@ class CreateMarkersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('address');
-            $table->string('type');
             $table->geometry('geometry');
             $table->string('district');
 
