@@ -26,3 +26,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     // fetch neighbors for a given coordinates
     Route::get('/markers/neighbors', 'MarkersController@neighbors');
 });
+
+Route::post('login', 'Api\AuthController@login');
+Route::get('/locations', 'MarkersController@locations');
