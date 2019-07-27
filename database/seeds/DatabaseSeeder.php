@@ -1,6 +1,7 @@
 <?php
 
 use App\Marker;
+use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -18,6 +19,7 @@ class DatabaseSeeder extends Seeder
 
 
         DB::table('markers')->truncate();
+        DB::table('users')->truncate();
 
         $districts = ['Dhadimagu', 'Dhiguvaandu', 'Hoadhadu', 'Maadhadu', 'Miskiymagu', 'Malegan', 'Funaadu', 'Dhoodigan'];
 
@@ -43,6 +45,12 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
+
+        User::create([
+            'name' => 'My Self',
+            'email' => 'myself@myself.com',
+            'password' => Hash::make('secret')
+        ]);
 
     }
 }
