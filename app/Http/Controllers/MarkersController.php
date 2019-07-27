@@ -78,4 +78,9 @@ class MarkersController extends Controller
 
         return response()->json($collection);
     }
+
+    public function locations(Request $request)
+    {
+        return $request->all();
+    }
 }
