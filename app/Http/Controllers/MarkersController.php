@@ -103,6 +103,12 @@ class MarkersController extends Controller
 
     public function locations(Request $request)
     {
-        return $request->all();
+        $keyword = $request->get('keyword');
+        $markerCollections = Marker::where('name', 'like', $keyword . '%')->limit(10)->get()->map(function ($marker) {
+            $data = $marker->geometry->toJson();
+            $geo = Geometry::jsonUnserialize(json_decode($data));
+            return new Feature($geo, ['name' => $marker->name]);
+        });
+        return response()->json($markerCollections);
     }
 }
