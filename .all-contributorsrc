@@ -1,0 +1,23 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "xahy",
+      "name": "Ismail Zahee",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2995938?v=4",
+      "profile": "http://xahy.me",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "maps-api",
+  "projectOwner": "fuvahmulah",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
