@@ -13,9 +13,10 @@ class Marker extends Model
     protected $fillable = [
         'name',
         'address',
-        'type',
         'geometry',
         'district',
+        'marker_type_id',
+        'created_by'
     ];
 
     protected $spatialFields = [

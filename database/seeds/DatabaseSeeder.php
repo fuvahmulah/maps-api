@@ -32,19 +32,18 @@ class DatabaseSeeder extends Seeder
 
         foreach ($districts as $district) {
 
-            $district_file = $dir . $district .'.geojson';
+            $district_file = $dir . $district . '.geojson';
             $data = json_decode(file_get_contents($district_file), true);
             foreach ($data['features'] as $feature) {
 
-                $this->command->info('adding address '.$feature['properties']['Name']);
+                $this->command->info('adding address ' . $feature['properties']['Name']);
 
                 $geo = \GeoJson\Geometry\Geometry::jsonUnserialize($feature['geometry']);
 
                 $point = \Grimzy\LaravelMysqlSpatial\Types\Geometry::fromJson($geo);
-//                $point = \Grimzy\LaravelMysqlSpatial\Types\Geometry::fromJson(json_encode($feature['geometry']));
+                //                $point = \Grimzy\LaravelMysqlSpatial\Types\Geometry::fromJson(json_encode($feature['geometry']));
 
                 Marker::create([
-                    'type' => 'house',
                     'district' => $district,
                     'name' => $feature['properties']['Name'],
                     'address' => $feature['properties']['Name'],
@@ -57,12 +56,12 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+
         User::create([
             'name' => 'My Self',
             'email' => 'myself@myself.com',
             'username' => 'mysqlf',
             'password' => Hash::make('secret')
         ]);
-
     }
 }
