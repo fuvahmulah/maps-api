@@ -72,6 +72,7 @@ class LoginController extends Controller
             $user = User::create([
                 'email' => $info['email'],
                 'name' => $info['name'],
+                'username' => Str::slug($info['name']),
                 'password' => Str::random(12),
                 'password_set' => false,
             ]);

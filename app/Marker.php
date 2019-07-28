@@ -2,22 +2,28 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\Tags\HasTags;
 
 class Marker extends Model
 {
-    use SpatialTrait;
+    use SpatialTrait, HasTags;
 
     protected $fillable = [
         'name',
         'address',
-        'type',
         'geometry',
         'district',
+        'marker_type_id',
+        'created_by'
     ];
 
     protected $spatialFields = [
         'geometry'
+    ];
+
+    protected $dates = [
+        'verified_at',
     ];
 }

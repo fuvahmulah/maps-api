@@ -24,6 +24,7 @@ class SetPasswordRequest extends FormRequest
     public function rules()
     {
         return [
+            'username' => 'required|string|unique:users,username,'.auth()->user()->id,
             'password' => 'required|string|confirmed',
         ];
     }

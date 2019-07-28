@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMarkersTable extends Migration
+class CreatePhotosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,13 @@ class CreateMarkersTable extends Migration
      */
     public function up()
     {
-        Schema::create('markers', function (Blueprint $table) {
+        Schema::create('photos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('address');
-            $table->geometry('geometry');
-            $table->string('district');
-
-            $table->unsignedInteger('marker_type_id')->index();
+            $table->unsignedInteger('marker_id');
+            $table->string('file_url');
+            $table->text('caption')->nullable();
+            
             $table->unsignedInteger('created_by');
-
-            $table->timestamp('verified_at')->nullable();
-            $table->unsignedInteger('verified_by')->nullable();
             $table->timestamps();
         });
     }
@@ -36,6 +31,6 @@ class CreateMarkersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('markers');
+        Schema::dropIfExists('photos');
     }
 }

@@ -18,6 +18,7 @@ class UserController extends Controller
     {
         $user = $request->user();
 
+        $user->username = $request->get('username');
         $user->password = Hash::make($request->get('password'));
         $user->password_set = true;
 

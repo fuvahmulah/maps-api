@@ -7,9 +7,31 @@ use GeoJson\Feature\Feature;
 use GeoJson\Feature\FeatureCollection;
 use GeoJson\Geometry\Geometry;
 use Illuminate\Http\Request;
+use Grimzy\LaravelMysqlSpatial\Types\Point;
 
 class MarkersController extends Controller
 {
+
+    public function store(Request $request)
+    {
+        $attributes = $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'district' => 'required',
+            'district' => 'required',
+            'marker_type_id' => 'required|exists:marker_types,id',
+        ]);
+
+        $geoAttr = $request->validate([
+            'lat' => 'required',
+            'long' => 'required'
+        ]);
+
+        $attributes['created_by'] = auth()->id();
+        $attributes['geometry'] = new Point($geoAttr['lat'], $geoAttr['long']);
+        $marker = Marker::create($attributes);
+        return response()->json($marker, 201);
+    }
     /**
      * Returns all markers as a geojson feed
      *
@@ -42,8 +64,8 @@ class MarkersController extends Controller
      */
     public function neighbors(Request $request)
     {
-//        $lat = 73.4255247;
-//        $lon = -0.2971667;
+        //        $lat = 73.4255247;
+        //        $lon = -0.2971667;
 
         $lat = $request->get('lat');
         $lon = $request->get('lon');
@@ -77,5 +99,16 @@ class MarkersController extends Controller
         $collection = new FeatureCollection($features);
 
         return response()->json($collection);
+    }
+
+    public function locations(Request $request)
+    {
+        $keyword = $request->get('keyword');
+        $markerCollections = Marker::where('name', 'like', $keyword . '%')->limit(10)->get()->map(function ($marker) {
+            $data = $marker->geometry->toJson();
+            $geo = Geometry::jsonUnserialize(json_decode($data));
+            return new Feature($geo, ['name' => $marker->name]);
+        });
+        return response()->json($markerCollections);
     }
 }
