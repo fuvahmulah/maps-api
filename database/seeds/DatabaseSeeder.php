@@ -60,6 +60,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'My Self',
             'email' => 'myself@myself.com',
+            'username' => 'mysqlf',
             'password' => Hash::make('secret')
         ]);
 
