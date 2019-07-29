@@ -10,4 +10,12 @@ class MarkerType extends Model
     	'name',
     	'icon'
     ];
+
+    protected $hidden = [
+        'id',
+        'created_at',
+        'updated_at',
+        'created_by'
+    ];
+
 }
