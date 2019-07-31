@@ -26,4 +26,20 @@ class Marker extends Model
     protected $dates = [
         'verified_at',
     ];
+
+    public function marker_type()
+    {
+        return $this->belongsTo(MarkerType::class);
+    }
+
+    public function content()
+    {
+        return $this->hasOne(Content::class);
+    }
+
+    public function photos()
+    {
+        return $this->hasMany(Photo::class);
+    }
+
 }
