@@ -68,7 +68,7 @@ class MarkersController extends Controller
         //        $lon = -0.2971667;
 
         $lat = $request->get('lat');
-        $lon = $request->get('lon');
+        $lon = $request->get('long');
 
         if (empty($lat) || empty($lon)) {
             return response()->json(['message' => 'Query paramters :lat and :lon is required.'], 403);
@@ -81,8 +81,9 @@ class MarkersController extends Controller
             POINT(? + .2 / 111.1, ? + .4 / (111.1 / COS(RADIANS(?)))),
             POINT(? - .2 / 111.1, ? - .4 / (111.1 / COS(RADIANS(?))))),
             geometry
-        )", [$lat, $lon, $lat, $lat, $lon, $lat])
-            ->orderByRaw("GLength(LineString(geometry, POINT(?, ?))) asc", [$lat, $lon])
+        )", [$lon, $lat, $lon, $lon, $lat, $lon])
+            ->orderByRaw("GLength(LineString(geometry, POINT(?, ?))) asc", [$lon, $lat])
+            ->take(20)
             ->get();
 
 
