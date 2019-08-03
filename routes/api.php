@@ -24,8 +24,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     // fetch geojson of all markers
     Route::get('/markers/geojson', 'MarkersController@geoJson');
     // fetch neighbors for a given coordinates
-    Route::get('/markers/neighbors', 'MarkersController@neighbors');
+    // Route::get('/markers/neighbors', 'MarkersController@neighbors');
 });
 
 Route::post('login', 'Api\AuthController@login');
 Route::get('/locations', 'MarkersController@locations');
+Route::get('/markers/neighbors', 'MarkersController@neighbors');
