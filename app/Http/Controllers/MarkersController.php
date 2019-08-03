@@ -2,35 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Marker\CreateMarker;
 use App\Marker;
 use GeoJson\Feature\Feature;
 use GeoJson\Feature\FeatureCollection;
 use GeoJson\Geometry\Geometry;
 use Illuminate\Http\Request;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
+use Illuminate\Support\Arr;
 
 class MarkersController extends Controller
 {
-
-    public function store(Request $request)
+    /**
+     * Creates a marker
+     *
+     * @param  CreateMarker  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(CreateMarker $request)
     {
-        $attributes = $request->validate([
-            'name' => 'required',
-            'address' => 'required',
-            'district' => 'required',
-            'district' => 'required',
-            'marker_type_id' => 'required|exists:marker_types,id',
-        ]);
-
-        $geoAttr = $request->validate([
-            'lat' => 'required',
-            'long' => 'required'
-        ]);
-
+        $attributes = Arr::except($request->validated(), ['lat', 'long']);
         $attributes['created_by'] = auth()->id();
-        $attributes['geometry'] = new Point($geoAttr['lat'], $geoAttr['long']);
+        $attributes['geometry'] = new Point($request->get('lat'), $request->get('long'));
         $marker = Marker::create($attributes);
-        return response()->json($marker, 201);
+
+        $data = $marker->geometry->toJson();
+        $geo = Geometry::jsonUnserialize(json_decode($data));
+        $feature = new Feature($geo, [
+            'name' => $marker->name,
+            'address' => $marker->address,
+            'district' => $marker->district,
+            'type' => $marker->marker_type,
+            'content' => $marker->content,
+            'photos' => $marker->photos,
+            'verified' => $marker->verified_at != null
+        ]);
+
+        return response()->json($feature, 201);
     }
     /**
      * Returns all markers as a geojson feed
