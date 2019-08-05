@@ -26,19 +26,7 @@ class MarkersController extends Controller
         $attributes['geometry'] = new Point($request->get('lat'), $request->get('long'));
         $marker = Marker::create($attributes);
 
-        $data = $marker->geometry->toJson();
-        $geo = Geometry::jsonUnserialize(json_decode($data));
-        $feature = new Feature($geo, [
-            'name' => $marker->name,
-            'address' => $marker->address,
-            'district' => $marker->district,
-            'type' => $marker->marker_type,
-            'content' => $marker->content,
-            'photos' => $marker->photos,
-            'verified' => $marker->verified_at != null
-        ]);
-
-        return response()->json($feature, 201);
+        return response()->json($marker->toFeature(), 201);
     }
     /**
      * Returns all markers as a geojson feed
@@ -55,9 +43,7 @@ class MarkersController extends Controller
         foreach ($markers as $marker) {
             $data = $marker->geometry->toJson();
 
-            $geo = Geometry::jsonUnserialize(json_decode($data));
-
-            $features[] = new Feature($geo, ['name' => $marker->name]);
+            $features[] = $marker->toFeature();
         }
 
         $collection = new FeatureCollection($features);
@@ -94,15 +80,10 @@ class MarkersController extends Controller
             ->take(20)
             ->get();
 
-
         $features = [];
 
         foreach ($markers as $marker) {
-            $data = $marker->geometry->toJson();
-
-            $geo = Geometry::jsonUnserialize(json_decode($data));
-
-            $features[] = new Feature($geo, ['name' => $marker->name]);
+            $features[] = $marker->toFeature();
         }
 
         $collection = new FeatureCollection($features);
@@ -114,17 +95,7 @@ class MarkersController extends Controller
     {
         $keyword = $request->get('keyword');
         $markerCollections = Marker::where('name', 'like', $keyword . '%')->limit(10)->get()->map(function ($marker) {
-            $data = $marker->geometry->toJson();
-            $geo = Geometry::jsonUnserialize(json_decode($data));
-            return new Feature($geo, [
-                'name' => $marker->name,
-                'address' => $marker->address,
-                'district' => $marker->district,
-                'type' => $marker->marker_type,
-                'content' => $marker->content,
-                'photos' => $marker->photos,
-                'verified' => $marker->verified_at != null
-            ]);
+           return $marker->toFeature();
         });
         return response()->json($markerCollections);
     }

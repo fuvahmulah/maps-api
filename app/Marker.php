@@ -2,6 +2,8 @@
 
 namespace App;
 
+use GeoJson\Feature\Feature;
+use GeoJson\Geometry\Geometry;
 use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Tags\HasTags;
@@ -42,4 +44,17 @@ class Marker extends Model
         return $this->hasMany(Photo::class);
     }
 
+    public function toFeature()
+    {
+        $geo = Geometry::jsonUnserialize(json_decode($this->getAttribute('geometry')->toJson()));
+
+        return new Feature($geo, [
+            'name' => $this->getAttribute('name'),
+            'address' => $this->getAttribute('address'),
+            'district' => $this->getAttribute('district'),
+            'type' => $this->getRelationValue('marker_type'),
+            'content' => $this->getRelationValue('content'),
+            'photos' => $this->getRelationValue('photos'),
+        ]);
+    }
 }
