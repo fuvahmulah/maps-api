@@ -25,10 +25,13 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/markers/geojson', 'MarkersController@geoJson');
     // fetch neighbors for a given coordinates
     // Route::get('/markers/neighbors', 'MarkersController@neighbors');
+    Route::get('/locations', 'MarkersController@locations');
+    Route::get('/markers/neighbors', 'MarkersController@neighbors');
+    Route::get('/marker-types', 'MarkersTypeController@index');
 });
 
 Route::post('login', 'Api\AuthController@login');
-Route::get('/locations', 'MarkersController@locations');
-Route::get('/markers/neighbors', 'MarkersController@neighbors');
+//Route::get('/locations', 'MarkersController@locations');
+//Route::get('/markers/neighbors', 'MarkersController@neighbors');
 
-Route::get('/marker-types', 'MarkersTypeController@index');
+//Route::get('/marker-types', 'MarkersTypeController@index');
