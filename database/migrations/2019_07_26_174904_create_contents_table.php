@@ -17,9 +17,10 @@ class CreateContentsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->text('summary');
+            $table->unsignedInteger('marker_id');
             $table->string('source_url')->nullable();
             $table->string('source_name')->nullable();
-            
+
             $table->unsignedInteger('created_by');
             $table->timestamps();
         });

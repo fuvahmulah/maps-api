@@ -3,8 +3,10 @@
 namespace Tests\Feature;
 
 use App\User;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 use App\Marker;
 use App\MarkerType;
@@ -29,46 +31,75 @@ class MarkerTest extends TestCase
             'marker_type_id' => $markerType->id
         ];
 
-        // $this->withoutExceptionHandling();
-
-        $this->post(
+        $response = $this->postJson(
             'api/markers',
             $attributes
-        )->assertStatus(201);
+        );
+
+        $response->assertStatus(201);
+
+        $response->assertJsonStructure([
+            'type',
+            'geometry' => [
+                'type',
+                'coordinates',
+            ],
+            'properties'
+        ]);
     }
-
-
 
     /** @test */
     function it_validates_the_request_marker()
     {
         $this->passportSignIn();
 
-        $this->post(
+        $this->postJson(
             'api/markers',
             factory(Marker::class)->raw(['name' => ''])
-        )->assertSessionHasErrors(['name'], $format = null, $errorBag = 'default');
+        )->assertJsonValidationErrors(['name']);
 
 
-        $this->post(
+        $this->postJson(
             'api/markers',
             factory(Marker::class)->raw(['district' => ''])
-        )->assertSessionHasErrors(['district'], $format = null, $errorBag = 'default');
+        )->assertJsonValidationErrors(['district']);
 
 
-        $this->post(
+        $this->postJson(
             'api/markers',
             factory(Marker::class)->raw(['address' => ''])
-        )->assertSessionHasErrors(['address'], $format = null, $errorBag = 'default');
+        )->assertJsonValidationErrors(['address']);
 
-        $this->post(
+        $this->postJson(
             'api/markers',
             factory(Marker::class)->raw(['lat' => ''])
-        )->assertSessionHasErrors(['lat'], $format = null, $errorBag = 'default');
+        )->assertJsonValidationErrors(['lat']);
 
-        $this->post(
+        $this->postJson(
             'api/markers',
             factory(Marker::class)->raw(['long' => ''])
-        )->assertSessionHasErrors(['long'], $format = null, $errorBag = 'default');
+        )->assertJsonValidationErrors(['long']);
+    }
+
+    /** @test */
+    public function it_returns_error_if_not_authenticated()
+    {
+        $markerType = factory(MarkerType::class)->create();
+        $attributes = [
+            'name' => 'Kedeyre Miskiy',
+            'address' => 'Someplace',
+            'lat' => 3.4,
+            'long' =>  1.2,
+            'district' => 'Dhadimagu',
+            'marker_type_id' => $markerType->id
+        ];
+
+        $this->withoutExceptionHandling();
+
+        $this->expectException(AuthenticationException::class);
+
+        $response = $this->postJson('api/markers', $attributes);
+
+        $response->assertStatus(401);
     }
 }
