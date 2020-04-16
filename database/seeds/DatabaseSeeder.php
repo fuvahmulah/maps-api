@@ -58,10 +58,12 @@ class DatabaseSeeder extends Seeder
 
 
         User::create([
-            'name' => 'My Self',
-            'email' => 'myself@myself.com',
-            'username' => 'mysqlf',
-            'password' => Hash::make('secret')
+            'name' => 'Administrator',
+            'email' => 'admin@fvm.com',
+            'username' => 'admin',
+            'type' => 'admin',
+            'password' => 'secret',
+            'password_set' => true
         ]);
     }
 }
