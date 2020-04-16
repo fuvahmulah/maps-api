@@ -15,10 +15,11 @@
         "grimzy/laravel-mysql-spatial": "^2.1",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
-        "laravel/passport": "^7.3",
+        "laravel/passport": "^8.0",
         "laravel/socialite": "^4.1",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
+        "nyholm/psr7": "^1.2",
         "spatie/laravel-tags": "^2.4"
     },
     "require-dev": {
