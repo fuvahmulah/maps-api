@@ -31,7 +31,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 });
 
 Route::post('login', 'Api\AuthController@login');
-//Route::get('/locations', 'MarkersController@locations');
-//Route::get('/markers/neighbors', 'MarkersController@neighbors');
+Route::get('/locations', 'MarkersController@locations');
+Route::get('/markers/neighbors', 'MarkersController@neighbors');
 
-//Route::get('/marker-types', 'MarkersTypeController@index');
+Route::get('/marker-types', 'MarkersTypeController@index');
