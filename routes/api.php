@@ -15,9 +15,16 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => 'auth:api'], function () {
 
+
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+
+    // returns paginated list of all tags
+    Route::get('/tags', 'TagsController@index');
+
+    // returns matched tags based on a like search on the english translation of the tag name
+    Route::get('/tags/{keyword}', 'TagsController@search');
 
     Route::post('/markers', 'MarkersController@store');
 

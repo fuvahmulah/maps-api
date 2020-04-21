@@ -23,7 +23,7 @@ class MarkersController extends Controller
     {
         $attributes = Arr::except($request->validated(), ['lat', 'long']);
         $attributes['created_by'] = auth()->id();
-        $attributes['geometry'] = new Point($request->get('lat'), $request->get('long'));
+        $attributes['geometry'] = new Point($request->input('lat'), $request->input('long'));
         $marker = Marker::create($attributes);
 
         return response()->json($marker->toFeature(), 201);

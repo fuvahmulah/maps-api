@@ -18,7 +18,8 @@ class Marker extends Model
         'geometry',
         'district',
         'marker_type_id',
-        'created_by'
+        'created_by',
+        'tags'
     ];
 
     protected $spatialFields = [

@@ -29,7 +29,9 @@ class CreateMarker extends FormRequest
             'district' => 'required',
             'marker_type_id' => 'required|exists:marker_types,id',
             'lat' => 'required',
-            'long' => 'required'
+            'long' => 'required',
+            'tags' => 'sometimes|array|nullable',
+            'tags.*' => 'required|string',
         ];
     }
 }
