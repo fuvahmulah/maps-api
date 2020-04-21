@@ -7,6 +7,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Validation\ValidationException;
+use Spatie\Tags\Tag;
 use Tests\TestCase;
 use App\Marker;
 use App\MarkerType;
