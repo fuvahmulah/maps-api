@@ -14,7 +14,15 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    @if(auth()->check())
+                        @if(auth()->user()->type == 'admin')
+                        <passport-clients class="mb-4"></passport-clients>
+                        <passport-authorized-clients class="mb-4"></passport-authorized-clients>
+                        <passport-personal-access-tokens></passport-personal-access-tokens>
+                        @else
+                            You are logged in!
+                        @endif
+                    @endif
                 </div>
             </div>
         </div>
